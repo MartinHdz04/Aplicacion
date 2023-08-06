@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "449281238527",
+    "project_id": "appean-bff06",
+    "storage_bucket": "appean-bff06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449281238527:android:a554e507ebbe73624733ca",
+        "android_client_info": {
+          "package_name": "com.example.appean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449281238527-qfn3p8m4d2fh2vvkl02k68kqm9f2qlk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appean",
+            "certificate_hash": "fb57e19a2ae574ece8bb27f271d9ffc07ac86f75"
+          }
+        },
+        {
+          "client_id": "449281238527-l5njo5lpbs280jje45cobfgv2nao555s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfraDjsE4qqbnygOEOt1VzTD-ptOpW6CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449281238527-l5njo5lpbs280jje45cobfgv2nao555s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
