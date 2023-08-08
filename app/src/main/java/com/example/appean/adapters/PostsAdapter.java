@@ -18,6 +18,7 @@ import com.example.appean.activities.PostDetailActivity;
 import com.example.appean.models.Post;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 //Clase para tomar la información de un Post y pasarla a un CardView
@@ -34,6 +35,11 @@ public class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.Vi
     //Asocia el viewHolder con los datos
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Post post) {
+
+        //Me toma el documento de la base de datos según la posición que este tenga
+        DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(position);
+        String postId = documentSnapshot.getId();
+
         holder.tv_title.setText(post.getCategory());
         holder.tv_description.setText(post.getDescription());
         if (post.getImage() != null && !post.getImage().isEmpty()){
@@ -45,6 +51,8 @@ public class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(contexto, PostDetailActivity.class);
+                //Mandar la info del Id del Post para recuperarlo después
+                intent.putExtra("PostId", postId);
                 contexto.startActivity(intent);
             }
         });

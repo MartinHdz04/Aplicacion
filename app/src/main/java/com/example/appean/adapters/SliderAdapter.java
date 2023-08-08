@@ -16,9 +16,12 @@ import java.util.List;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
+    //Contexto para determinar los elementos
     private Context context;
+    //Lista que guarda cada item del slider
     private List<SliderItem> mSliderItems = new ArrayList<>();
 
+    //Constructores
     public SliderAdapter(){}
     public SliderAdapter(Context context, List<SliderItem> mSliderItems) {
         this.context = context;
@@ -40,9 +43,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         notifyDataSetChanged();
     }
 
-
+    //Método principal que determina las configuraciones apenas se crea la vista
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
+
+        //Me retorna una clase que creamos, pero en términos generales es un viewholder, que la inflamos
+        // con la plantilla del slider que contendrá los item
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout_item, null);
         return new SliderAdapterVH(inflate);
     }
@@ -67,6 +73,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         return mSliderItems.size();
     }
 
+    //Clase para complementar el adapter,
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
