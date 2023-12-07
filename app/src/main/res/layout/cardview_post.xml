@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_postCard"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:background="@color/verde"/>
 
@@ -28,12 +28,62 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/tv_usernamePostCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre de usuario"
+            android:textSize="13dp"
+            android:textStyle="italic"
+            android:textColor="@color/verde"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/tv_descripctionPostCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Descripción del juego"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:maxLines="2"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gris"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_like_CVP"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/like_gris"/>
+
+            <TextView
+                android:id="@+id/tv_likes_CVP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 Me Gustas"
+                android:textAlignment="textEnd"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

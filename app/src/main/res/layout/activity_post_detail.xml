@@ -8,35 +8,182 @@
     android:fitsSystemWindows="true"
     tools:context=".activities.PostDetailActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="6dp"
-            android:layout_margin="16dp"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/imageSlider"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"/>
+                android:layout_height="310dp">
 
-        </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="6dp"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="3dp">
 
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/imageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        app:sliderAnimationDuration="600"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderAutoCycleEnabled="true"
+                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorGravity="center_horizontal|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorSelectedColor="#5A5A5A"
+                        app:sliderIndicatorUnselectedColor="#FFF"/>
 
-    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_comments_APD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/verde"
+                    android:src="@drawable/ic_chats"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginRight="15dp"/>
+            </FrameLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:elevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <io.github.florent37.shapeofview.shapes.CircleView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/ic_profile"
+                        app:shape_circle_borderColor="@color/black"
+                        app:shape_circle_borderWidth="2dp">
+
+                        <ImageView
+                            android:id="@+id/iv_profile_APD"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:backgroundTint="@color/gris"
+                            android:src="@drawable/ic_person"/>
+                    </io.github.florent37.shapeofview.shapes.CircleView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_username_APD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="[Nombre de Usuario]"/>
+
+                        <TextView
+                            android:id="@+id/tv_phone_ADP"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="[Tel del usuario]"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_ir_perfil_APD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:padding="4dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="5dp"
+                        android:text="VISITAR PERFIL"
+                        android:textColor="@color/white"
+                        android:background="@color/verde"
+                        android:drawableBottom="@color/white"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tv_category_APD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="[Category]"
+                    android:textColor="@color/gris"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_description_APD"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_margin="15dp"
+                    android:gravity="top"
+                    android:text="On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."
+                    android:textColor="@color/gris"
+                    android:textStyle="normal"
+                    android:scrollbars="vertical"
+                    android:scrollbarSize="5dp"
+                    android:scrollbarStyle="outsideInset"/>
+
+              <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="COMENTARIOS"
+                    android:textColor="@color/gris"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleViewComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <io.github.florent37.shapeofview.shapes.CircleView
+        android:id="@+id/iv_back_APD"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:elevation="4dp"
+        app:shape_circle_borderWidth="0dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_arrow_left"
+            android:layout_marginLeft="5dp"/>
+    </io.github.florent37.shapeofview.shapes.CircleView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
