@@ -7,8 +7,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.Date;
-
 //Clase que ayudará al manejo de los Post
 public class PostProvider {
 
@@ -17,13 +15,13 @@ public class PostProvider {
     private String id = "";
 
     //Constructor
-    public PostProvider (){
+    public PostProvider() {
         //Al iniciar apunta a la colección Post
         this.mCollection = FirebaseFirestore.getInstance().collection("Post");
     }
 
     //Método para guardar los Post el firebase storage
-    public Task<Void> save (Post post){
+    public Task<Void> save(Post post) {
         return this.mCollection.document().set(post);
     }
 
@@ -33,17 +31,22 @@ public class PostProvider {
     }
 
     //Consultar a la base de datos y devolver los datos en orden de subida
-    public Query getAll (){
+    public Query getAll() {
         return mCollection.orderBy("timestamp", Query.Direction.DESCENDING);
     }
 
     //Consultar el número de publicaciones de un usuario por medio del id
-    public Query getNumberPostByUser(String id){
+    public Query getPostByUser(String id) {
         return mCollection.whereEqualTo("idUser", id);
     }
 
     //Consultar la colección y recuperar el documento con cierto id
-    public Task<DocumentSnapshot> getPostById(String id){
+    public Task<DocumentSnapshot> getPostById(String id) {
         return mCollection.document(id).get();
+    }
+
+    //Eliminar un campo con un id
+    public Task<Void> delete(String idPost){
+        return mCollection.document(idPost).delete();
     }
 }

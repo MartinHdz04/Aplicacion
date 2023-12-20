@@ -27,8 +27,10 @@ import com.example.appean.adapters.SliderAdapter;
 import com.example.appean.models.Comment;
 import com.example.appean.models.SliderItem;
 import com.example.appean.providers.CommentProvider;
+import com.example.appean.providers.LikeProvider;
 import com.example.appean.providers.PostProvider;
 import com.example.appean.providers.UserProvider;
+import com.example.appean.utils.RelativeTime;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +38,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -51,7 +54,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     //Variables del front
     private SliderView mSliderView;
-    private TextView tv_category, tv_description, tv_phone, tv_username;
+    private TextView tv_category, tv_description, tv_phone, tv_username, tv_relativeTime, tv_likes;
     private ImageView iv_profile;
     private Button btn_irPerfil;
     private CircleView mCircleViewBack;
@@ -62,6 +65,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private PostProvider mPostProvider;
     private UserProvider mUserProvider;
     private CommentProvider mCommentProvider;
+    private LikeProvider mLikeProvider;
 
     //Adapters
     private SliderAdapter mSliderAdapter;
@@ -81,6 +85,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mPostProvider = new PostProvider();
         mUserProvider = new UserProvider();
         mCommentProvider = new CommentProvider();
+        mLikeProvider = new LikeProvider();
 
         //Instancio la lista de cada item del slider
         mSliderItems = new ArrayList<>();
@@ -98,6 +103,8 @@ public class PostDetailActivity extends AppCompatActivity {
         tv_username = findViewById(R.id.tv_username_APD);
         tv_phone = findViewById(R.id.tv_phone_ADP);
         tv_description = findViewById(R.id.tv_description_APD);
+        tv_relativeTime = findViewById(R.id.tv_relaTime_APD);
+        tv_likes = findViewById(R.id.tv_likes_APD);
         iv_profile = findViewById(R.id.iv_profile_APD);
         btn_irPerfil = findViewById(R.id.btn_ir_perfil_APD);
         mFabComment = findViewById(R.id.fab_comments_APD);
@@ -123,7 +130,6 @@ public class PostDetailActivity extends AppCompatActivity {
         //Instanciación de imágenes del slider
         getPost();
 
-
         btn_irPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +141,19 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDialogComment();
+            }
+        });
+
+        //Obtener número de likes de la publicación
+        getNumberLikes();
+    }
+
+    private void getNumberLikes() {
+        mLikeProvider.getLikesByPost(mExtraPostID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                int numberLikes = queryDocumentSnapshots.size();
+                tv_likes.setText(String.valueOf(numberLikes) + "Me gusta");
             }
         });
     }
@@ -309,9 +328,21 @@ public class PostDetailActivity extends AppCompatActivity {
                         tv_description.setText(description);
                     }
 
+                    if (documentSnapshot.contains("timestamp")){
+                        //Si existe el campo, traemos la información del mismo, donde está el timestamp
+                        long timestamp = documentSnapshot.getLong("timestamp");
+
+                        //Obtenemos el valor desde hace cuanto se creó un post
+                        String relativeTime = RelativeTime.getTimeAgo(timestamp, PostDetailActivity.this);
+
+                        tv_relativeTime.setText(relativeTime);
+                    }
+
                     if (documentSnapshot.contains("idUser")){
                         //Si existe el campo, traemos la información del mismo, donde está el id del usuario
                         idUser = documentSnapshot.getString("idUser");
+
+                        //Recuperamos datos del usuario
                         getUser();
                     }
                 }

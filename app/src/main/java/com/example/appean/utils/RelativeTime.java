@@ -1,5 +1,6 @@
 package com.example.appean.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -46,7 +47,7 @@ public class RelativeTime extends Application {
 
     public static String timeFormatAMPM(long timestamp) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
         String dateString = formatter.format(new Date(timestamp));
 
         return  dateString;

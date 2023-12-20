@@ -11,15 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appean.R;
 import com.example.appean.activities.EditProfileActivity;
+import com.example.appean.adapters.MyPostsAdapter;
+import com.example.appean.models.Post;
 import com.example.appean.providers.Authprovider;
 import com.example.appean.providers.ImageProvider;
 import com.example.appean.providers.PostProvider;
 import com.example.appean.providers.UserProvider;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -35,12 +41,16 @@ public class ProfileFragment extends Fragment {
     //Variables del front
     private TextView tv_username, tv_phone, tv_mail, tv_publicaciones;
     private ImageView im_profile, im_cover;
+    private RecyclerView mRecyclerView;
 
     //Providers
     private ImageProvider mImageProvider;
     private UserProvider mUserProvider;
     private Authprovider mAuthProvider;
     private PostProvider mPostProvider;
+
+    //Adapter
+    private MyPostsAdapter myPostsAdapter;
 
     //Atributos a actualizar
     private String mUsername="", mPhone="", mEmail="";
@@ -77,12 +87,47 @@ public class ProfileFragment extends Fragment {
         tv_username = mView.findViewById(R.id.tv_username);
         im_cover = mView.findViewById(R.id.im_cover);
         im_profile = mView.findViewById(R.id.im_profile);
+        mRecyclerView = mView.findViewById(R.id.recycleViewMyPost_FP);
+
+        //Definir el campo de acción del RecyclerView
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Poner los datos del usuario
         getUser();
         getNumberPost();
         return mView;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Consulta a firebase y devuelve los Post
+        Query query = mPostProvider.getPostByUser(mAuthProvider.getUid());
+
+        //Pone los post en un formato para el adapter
+        FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
+                .build();
+
+        //Le pasamos el formato al adapter
+        myPostsAdapter = new MyPostsAdapter(options, getContext());
+
+        //Ponemos los post en el recyclerView
+        mRecyclerView.setAdapter(myPostsAdapter);
+
+        //Comienza a detectar cambio en la base de datos
+        myPostsAdapter.startListening();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //Deja de pedir datos a la base de datos
+        myPostsAdapter.startListening();
+    }
+
     //Ir a editar el perfil
     private void goToEditProfile() {
         Intent intent = new Intent(getContext(), EditProfileActivity.class);
@@ -130,7 +175,7 @@ public class ProfileFragment extends Fragment {
 
     private void getNumberPost(){
         String id = mAuthProvider.getUid();
-        mPostProvider.getNumberPostByUser(id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        mPostProvider.getPostByUser(id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 // Asigna el número del tamaño de la busqueda en la base de datos

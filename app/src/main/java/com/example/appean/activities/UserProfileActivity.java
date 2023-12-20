@@ -118,7 +118,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void getNumberPost(){
         String id = mAuthProvider.getUid();
-        mPostProvider.getNumberPostByUser(id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        mPostProvider.getPostByUser(id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 // Asigna el número del tamaño de la busqueda en la base de datos

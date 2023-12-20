@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:visibility="visible"
     tools:context=".activities.PostDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,45 +22,75 @@
                 android:layout_height="310dp">
 
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="6dp"
-                    android:layout_margin="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="3dp">
-
-                    <com.smarteist.autoimageslider.SliderView
-                        android:id="@+id/imageSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        app:sliderAnimationDuration="600"
-                        app:sliderAutoCycleDirection="back_and_forth"
-                        app:sliderAutoCycleEnabled="true"
-                        app:sliderIndicatorAnimationDuration="600"
-                        app:sliderIndicatorGravity="center_horizontal|bottom"
-                        app:sliderIndicatorMargin="15dp"
-                        app:sliderIndicatorOrientation="horizontal"
-                        app:sliderIndicatorPadding="3dp"
-                        app:sliderIndicatorRadius="2dp"
-                        app:sliderIndicatorSelectedColor="#5A5A5A"
-                        app:sliderIndicatorUnselectedColor="#FFF"/>
+                    android:layout_margin="16dp"
+                    android:elevation="3dp"
+                    app:cardCornerRadius="6dp">
 
                 </androidx.cardview.widget.CardView>
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_comments_APD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/verde"
-                    android:src="@drawable/ic_chats"
                     android:layout_gravity="right|bottom"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp"
+                    android:background="@color/verde"
+                    android:src="@drawable/ic_chats" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="35dp">
+
+                    <TextView
+                        android:id="@+id/tv_relaTime_APD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hace 0 min"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_likes_APD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="0 Me gusta"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
+
             </FrameLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:elevation="3dp">
@@ -83,28 +114,28 @@
                             android:layout_height="match_parent"
                             android:background="@color/white"
                             android:backgroundTint="@color/gris"
-                            android:src="@drawable/ic_person"/>
+                            android:src="@drawable/ic_person" />
                     </io.github.florent37.shapeofview.shapes.CircleView>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_username_APD"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="[Nombre de Usuario]"/>
+                            android:text="[Nombre de Usuario]"
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/tv_phone_ADP"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="[Tel del usuario]"/>
+                            android:text="[Tel del usuario]"
+                            android:textColor="@color/black" />
                     </LinearLayout>
 
                     <Button
@@ -112,13 +143,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
-                        android:padding="4dp"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="5dp"
-                        android:text="VISITAR PERFIL"
-                        android:textColor="@color/white"
                         android:background="@color/verde"
-                        android:drawableBottom="@color/white"/>
+                        android:drawableBottom="@color/white"
+                        android:padding="4dp"
+                        android:text="VISITAR PERFIL"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -126,8 +157,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_category_APD"
@@ -136,8 +167,8 @@
                     android:gravity="center"
                     android:text="[Category]"
                     android:textColor="@color/gris"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_description_APD"
@@ -145,26 +176,26 @@
                     android:layout_height="170dp"
                     android:layout_margin="15dp"
                     android:gravity="top"
+                    android:scrollbarSize="5dp"
+                    android:scrollbarStyle="outsideInset"
+                    android:scrollbars="vertical"
                     android:text="On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."
                     android:textColor="@color/gris"
-                    android:textStyle="normal"
-                    android:scrollbars="vertical"
-                    android:scrollbarSize="5dp"
-                    android:scrollbarStyle="outsideInset"/>
+                    android:textStyle="normal" />
 
-              <TextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="COMENTARIOS"
                     android:textColor="@color/gris"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycleViewComments"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -183,7 +214,7 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_arrow_left"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_arrow_left" />
     </io.github.florent37.shapeofview.shapes.CircleView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
