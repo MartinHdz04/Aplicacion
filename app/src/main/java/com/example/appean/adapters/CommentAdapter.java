@@ -30,7 +30,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAda
 
     private UserProvider mUserProvider;
 
-    //Constructor PostAdapter
+    //Constructor CommentAdapter
     public CommentAdapter(FirestoreRecyclerOptions<Comment> options, Context contexto){
         super(options);
         this.contexto = contexto;

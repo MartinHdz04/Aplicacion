@@ -35,6 +35,11 @@ public class PostProvider {
         return mCollection.orderBy("timestamp", Query.Direction.DESCENDING);
     }
 
+    //Consultar a la base de datos y devolver los datos en orden de subida
+    public Query getPostByCategory(String categoria) {
+        return mCollection.whereEqualTo("category", categoria).orderBy("timestamp", Query.Direction.DESCENDING);
+    }
+
     //Consultar el número de publicaciones de un usuario por medio del id
     public Query getPostByUser(String id) {
         return mCollection.whereEqualTo("idUser", id);

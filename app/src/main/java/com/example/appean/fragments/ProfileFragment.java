@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,8 @@ import com.example.appean.providers.UserProvider;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -39,7 +42,7 @@ public class ProfileFragment extends Fragment {
     View mView;
 
     //Variables del front
-    private TextView tv_username, tv_phone, tv_mail, tv_publicaciones;
+    private TextView tv_username, tv_phone, tv_mail, tv_publicaciones, tv_cantPost;
     private ImageView im_profile, im_cover;
     private RecyclerView mRecyclerView;
 
@@ -85,6 +88,7 @@ public class ProfileFragment extends Fragment {
         tv_phone = mView.findViewById(R.id.num_phone);
         tv_publicaciones = mView.findViewById(R.id.num_publicaciones);
         tv_username = mView.findViewById(R.id.tv_username);
+        tv_cantPost = mView.findViewById(R.id.tv_cantPost_FP);
         im_cover = mView.findViewById(R.id.im_cover);
         im_profile = mView.findViewById(R.id.im_profile);
         mRecyclerView = mView.findViewById(R.id.recycleViewMyPost_FP);
@@ -96,7 +100,26 @@ public class ProfileFragment extends Fragment {
         //Poner los datos del usuario
         getUser();
         getNumberPost();
+        checkIfExistPosts();
         return mView;
+    }
+
+    //Método para mirar la cantidad de publicaciones del usuario
+    private void checkIfExistPosts() {
+        mPostProvider.getPostByUser(mAuthProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            //Hace una consulta en tiempo real, lo que significa que los cambio los hace de forma instantanea
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                //Cantidad de Posts
+                int numberPost = value.size();
+
+                if(numberPost>0){
+                    tv_cantPost.setText(String.valueOf(numberPost) + " publicaciones");
+                }else{
+                    tv_cantPost.setText("No hay publicaciones");
+                }
+            }
+        });
     }
 
     @Override
@@ -125,7 +148,7 @@ public class ProfileFragment extends Fragment {
     public void onStop() {
         super.onStop();
         //Deja de pedir datos a la base de datos
-        myPostsAdapter.startListening();
+        myPostsAdapter.stopListening();
     }
 
     //Ir a editar el perfil

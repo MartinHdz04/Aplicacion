@@ -31,17 +31,17 @@ import com.google.firebase.firestore.Query;
 //Clase donde aparecerán las publicaciones
 public class HomeFragment extends Fragment {
     //Objetos
-    View mView;
-    FloatingActionButton mFab;
-    Toolbar mToolbar;
-    RecyclerView mRecyclerView;
+    private View mView;
+    private FloatingActionButton mFab;
+    private Toolbar mToolbar;
+    private RecyclerView mRecyclerView;
 
     //Provider
-    Authprovider mAuthProvider;
-    PostProvider mPostProvider;
+    private Authprovider mAuthProvider;
+    private PostProvider mPostProvider;
 
     //Adapter
-    PostsAdapter mPostAdapter;
+    private PostsAdapter mPostAdapter;
 
 
 

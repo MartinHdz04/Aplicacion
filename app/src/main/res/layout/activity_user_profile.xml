@@ -16,11 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/verde">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax"
+                android:transitionName="@string/transitionname_picture">
 
                 <View
                     android:layout_width="match_parent"
@@ -33,9 +36,7 @@
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:alpha="0.8"
-                    android:background="@color/verde"
-                    app:layout_collapseMode="parallax"
-                    android:transitionName="@string/transitionname_picture"/>
+                    android:background="@color/verde"/>
 
                 <io.github.florent37.shapeofview.shapes.CircleView
                     android:layout_width="match_parent"
@@ -137,10 +138,13 @@
                         android:textSize="15dp"/>
 
                 </LinearLayout>
-
-
-
             </FrameLayout>
+            
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_AUP"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -150,27 +154,26 @@
         android:layout_marginTop="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="No hay publicaciones"
-            android:textSize="18dp"
-            android:textStyle="italic"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_cantPost_AUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="No hay publicaciones"
+                android:textSize="18dp"
+                android:textStyle="italic"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleViewMyPost_AUP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <io.github.florent37.shapeofview.shapes.CircleView
-        android:id="@+id/iv_back_AUP"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="15dp"
-        android:elevation="4dp"
-        app:shape_circle_borderWidth="0dp">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_arrow_left"
-            android:layout_marginLeft="5dp"/>
-    </io.github.florent37.shapeofview.shapes.CircleView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

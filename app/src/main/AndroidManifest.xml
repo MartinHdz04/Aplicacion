@@ -20,15 +20,25 @@
         android:theme="@style/Theme.AppEan"
         tools:targetApi="31">
         <activity
+            android:name=".activities.FiltersActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.HomeActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.UserProfileActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".activities.PostDetailActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.PostDetailActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".activities.HomeActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

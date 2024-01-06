@@ -305,7 +305,7 @@ public class PostActivity extends AppCompatActivity {
                             iv_subir.setImageBitmap(BitmapFactory.decodeFile(mImageFile.getAbsolutePath()));
                         } catch (Exception e) {
                             Toast.makeText(PostActivity.this, "Se produjo un error en la apertura de galeria", Toast.LENGTH_LONG).show();
-                            Log.d("ERRROR", "Se produjo un error" + e.getMessage());
+                            Log.d("ERROR", "Se produjo un error" + e.getMessage());
                         }
                     }
                 }
@@ -327,7 +327,7 @@ public class PostActivity extends AppCompatActivity {
                             Picasso.with(PostActivity.this).load(mPhotoPath).into(iv_subir);
                         } catch (Exception e) {
                             Toast.makeText(PostActivity.this, "Se produjo un error en la apertura de galeria", Toast.LENGTH_LONG).show();
-                            Log.d("ERRROR", "Se produjo un error" + e.getMessage());
+                            Log.d("ERROR", "Se produjo un error" + e.getMessage());
                         }
                     }
                 }

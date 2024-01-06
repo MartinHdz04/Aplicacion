@@ -1,23 +1,18 @@
 package com.example.appean.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appean.R;
 import com.example.appean.activities.PostDetailActivity;
-import com.example.appean.models.Like;
 import com.example.appean.models.Post;
 import com.example.appean.providers.Authprovider;
 import com.example.appean.providers.LikeProvider;
@@ -26,17 +21,11 @@ import com.example.appean.providers.UserProvider;
 import com.example.appean.utils.RelativeTime;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
-
 //Clase para tomar la información de un Post y pasarla a un CardView
-public class MyPostsAdapter extends FirestoreRecyclerAdapter<Post, MyPostsAdapter.ViewHolder> {
+public class PostsAdapterView extends FirestoreRecyclerAdapter<Post, PostsAdapterView.ViewHolder> {
 
     private Context contexto;
     //Providers
@@ -46,7 +35,7 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Post, MyPostsAdapte
     private PostProvider mPostProvider;
 
     //Constructor PostAdapter
-    public MyPostsAdapter(FirestoreRecyclerOptions<Post> options, Context contexto){
+    public PostsAdapterView(FirestoreRecyclerOptions<Post> options, Context contexto){
         super(options);
         this.contexto = contexto;
     }
@@ -79,6 +68,8 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Post, MyPostsAdapte
             Picasso.with(contexto).load(post.getImage()).into(holder.iv_post);
         }
 
+        holder.iv_delete.setVisibility(View.GONE);
+
         //Añade un evento para que al oprimir cada tarjeta te lleve a una pantalla que la profundize
         holder.viewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,43 +80,8 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Post, MyPostsAdapte
                 contexto.startActivity(intent);
             }
         });
-
-        //Añade evento para eliminar posts
-        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showComfirmDelete(postId);
-            }
-        });
-
     }
 
-    //Método para aparecer un cuadro de texto que confimer si se desea borrar una publicación
-    private void showComfirmDelete(String postId) {
-        new AlertDialog.Builder(contexto)
-                .setIcon(android.R.drawable.ic_dialog_alert) //Set de un icono
-                .setTitle("Eliminar Publicación") //Set de un título
-                .setMessage("¿Estás seguro de realizar esta acción?") //Mensaje de la alerta
-                .setPositiveButton("SI", new DialogInterface.OnClickListener() { //Evento para el botón SI
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Método para eliminar un Post
-                        deletePost(postId);
-                    }
-                })
-                .setNegativeButton("NO", null) //Método para en botón NO que cierra el dialog
-                .show();
-    }
-
-    //Método para eliminar un Post
-    private void deletePost(String postId) {
-        mPostProvider.delete(postId).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(contexto, "Se eliminó correctamente", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     //Crea el viewHolder y lo asocia con el cardView
     @NonNull
@@ -148,6 +104,7 @@ public class MyPostsAdapter extends FirestoreRecyclerAdapter<Post, MyPostsAdapte
             this.iv_post = view.findViewById(R.id.iv_post_CVMP);
             this.iv_delete = view.findViewById(R.id.iv_delete_CVMP);
             this.viewHolder = view;
+
         }
     }
 }

@@ -8,18 +8,23 @@
     android:visibility="visible"
     tools:context=".activities.PostDetailActivity">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/verde">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="310dp">
+                android:layout_height="330dp"
+                app:layout_collapseMode="parallax"
+                android:transitionName="@string/transitionname_picture">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -52,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@color/verde"
                     android:src="@drawable/ic_chats" />
 
@@ -86,11 +92,32 @@
 
             </FrameLayout>
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_APD"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:elevation="3dp">
@@ -173,7 +200,7 @@
                 <TextView
                     android:id="@+id/tv_description_APD"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:gravity="top"
                     android:scrollbarSize="5dp"
@@ -200,21 +227,6 @@
             </LinearLayout>
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </ScrollView>
-
-    <io.github.florent37.shapeofview.shapes.CircleView
-        android:id="@+id/iv_back_APD"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="20dp"
-        android:elevation="4dp"
-        app:shape_circle_borderWidth="0dp">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/ic_arrow_left" />
-    </io.github.florent37.shapeofview.shapes.CircleView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

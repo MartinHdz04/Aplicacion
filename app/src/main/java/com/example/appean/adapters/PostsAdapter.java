@@ -47,6 +47,12 @@ public class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.Vi
         this.contexto = contexto;
     }
 
+    //Constructor PostAdapter para
+    public PostsAdapter (FirestoreRecyclerOptions<Post> options, Context contexto, TextView textView){
+        super(options);
+        this.contexto = contexto;
+    }
+
     //Asocia el viewHolder con los datos
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Post post) {

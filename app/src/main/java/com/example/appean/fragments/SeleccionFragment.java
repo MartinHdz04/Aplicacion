@@ -70,7 +70,7 @@ public class SeleccionFragment extends DialogFragment {
         iv_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                category = "message";
+                category = "mensaje";
                 iv_1.setBackgroundColor(Color.parseColor("#22B04C"));
                 iv_2.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                 iv_3.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
@@ -81,7 +81,7 @@ public class SeleccionFragment extends DialogFragment {
         iv_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                category = "meet";
+                category = "evento";
                 iv_2.setBackgroundColor(Color.parseColor("#22B04C"));
                 iv_1.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                 iv_3.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
@@ -92,7 +92,7 @@ public class SeleccionFragment extends DialogFragment {
         iv_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                category = "location";
+                category = "ubicacion";
                 iv_3.setBackgroundColor(Color.parseColor("#22B04C"));
                 iv_2.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                 iv_1.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
@@ -103,7 +103,7 @@ public class SeleccionFragment extends DialogFragment {
         iv_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                category = "Date";
+                category = "reunion";
                 iv_4.setBackgroundColor(Color.parseColor("#22B04C"));
                 iv_2.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                 iv_3.setBackgroundColor(Color.parseColor("#FFFFFFFF"));

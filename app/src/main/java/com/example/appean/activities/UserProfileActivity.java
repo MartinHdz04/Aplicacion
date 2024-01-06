@@ -1,20 +1,33 @@
 package com.example.appean.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appean.R;
+import com.example.appean.adapters.MyPostsAdapter;
+import com.example.appean.adapters.PostsAdapterView;
+import com.example.appean.models.Post;
 import com.example.appean.providers.Authprovider;
 import com.example.appean.providers.ImageProvider;
 import com.example.appean.providers.PostProvider;
 import com.example.appean.providers.UserProvider;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -25,9 +38,10 @@ import io.github.florent37.shapeofview.shapes.CircleView;
 public class UserProfileActivity extends AppCompatActivity {
 
     //Variables del front
-    private TextView tv_username, tv_phone, tv_mail, tv_publicaciones;
+    private TextView tv_username, tv_phone, tv_mail, tv_publicaciones, tv_cantPost;
     private ImageView im_profile, im_cover;
-    private CircleView mCircleViewBack;
+    private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
 
     //Providers
     private ImageProvider mImageProvider;
@@ -41,6 +55,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //IntentExtra
     private String idUserExtra;
+
+    //Adapter
+    private PostsAdapterView myPostsAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,21 +78,71 @@ public class UserProfileActivity extends AppCompatActivity {
         tv_phone = findViewById(R.id.num_phone_AUP);
         tv_publicaciones = findViewById(R.id.num_publicaciones_AUP);
         tv_username = findViewById(R.id.tv_username_AUP);
+        tv_cantPost = findViewById(R.id.tv_cantPost_AUP);
         im_cover = findViewById(R.id.im_cover_AUP);
         im_profile = findViewById(R.id.im_profile_AUP);
-        mCircleViewBack = findViewById(R.id.iv_back_AUP);
+        mRecyclerView = findViewById(R.id.recycleViewMyPost_AUP);
+        mToolbar = findViewById(R.id.toolbar_AUP);
 
-        //Listener para ir atrás
-        mCircleViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        //Definir el campo de acción del RecyclerView
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UserProfileActivity.this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        //Instanciación del Toolbar
+        setSupportActionBar(mToolbar);
+        //Le colocamos un texto en vacio para no mostrar nada
+        getSupportActionBar().setTitle("");
+        //Añade el botón que va hacia la actividad padre de donde está el actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getUser();
         getNumberPost();
     }
+
+    /*
+    Se sobreescribre esta función debido que al volver al PostDeatailActivity
+    no funciona ya que se neceitan unos IntentExtra que vienen desde el home y se pierden al
+    volver a cargar la actividad de esta manera, es por eso que la acción que hace para recargar la actividad
+    es un finish, así no se pierden los extra
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Si al oprimir la actividad a la que se dirige es la actividad padre de la actividad
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Consulta a firebase y devuelve los Post
+        Query query = mPostProvider.getPostByUser(idUserExtra);
+
+        //Pone los post en un formato para el adapter
+        FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
+                .build();
+
+        //Le pasamos el formato al adapter
+        myPostsAdapter = new PostsAdapterView(options, UserProfileActivity.this);
+
+        //Ponemos los post en el recyclerView
+        mRecyclerView.setAdapter(myPostsAdapter);
+
+        //Comienza a detectar cambio en la base de datos
+        myPostsAdapter.startListening();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //Deja de pedir datos a la base de datos
+        myPostsAdapter.stopListening();
+    }
+
 
     //Método para recuperar la información del usuario
     private void getUser(){
@@ -120,12 +187,20 @@ public class UserProfileActivity extends AppCompatActivity {
         String id = mAuthProvider.getUid();
         mPostProvider.getPostByUser(id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
+            //Hace una consulta en tiempo real, lo que significa que los cambio los hace de forma instantanea
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 // Asigna el número del tamaño de la busqueda en la base de datos
                 int numberPost = queryDocumentSnapshots.size();
 
                 //colocar el número en la pantalla
                 tv_publicaciones.setText(String.valueOf(numberPost));
+
+                //Valor para el textView de la cantidad de Posts
+                if(numberPost>0){
+                    tv_cantPost.setText(String.valueOf(numberPost) + " publicaciones");
+                }else{
+                    tv_cantPost.setText("No hay publicaciones");
+                }
             }
         });
     }

@@ -176,6 +176,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_cantPost_FP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"

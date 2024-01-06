@@ -18,14 +18,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appean.R;
 import com.example.appean.adapters.CommentAdapter;
 import com.example.appean.adapters.SliderAdapter;
+import com.example.appean.fragments.ProfileFragment;
 import com.example.appean.models.Comment;
 import com.example.appean.models.SliderItem;
+import com.example.appean.providers.Authprovider;
 import com.example.appean.providers.CommentProvider;
 import com.example.appean.providers.LikeProvider;
 import com.example.appean.providers.PostProvider;
@@ -57,15 +60,16 @@ public class PostDetailActivity extends AppCompatActivity {
     private TextView tv_category, tv_description, tv_phone, tv_username, tv_relativeTime, tv_likes;
     private ImageView iv_profile;
     private Button btn_irPerfil;
-    private CircleView mCircleViewBack;
     private FloatingActionButton mFabComment;
     private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
 
     //Providers
     private PostProvider mPostProvider;
     private UserProvider mUserProvider;
     private CommentProvider mCommentProvider;
     private LikeProvider mLikeProvider;
+    private Authprovider mAuthProvider;
 
     //Adapters
     private SliderAdapter mSliderAdapter;
@@ -86,6 +90,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mUserProvider = new UserProvider();
         mCommentProvider = new CommentProvider();
         mLikeProvider = new LikeProvider();
+        mAuthProvider = new Authprovider();
 
         //Instancio la lista de cada item del slider
         mSliderItems = new ArrayList<>();
@@ -97,7 +102,6 @@ public class PostDetailActivity extends AppCompatActivity {
         mExtraPostID = getIntent().getStringExtra("PostId");
 
         //Conexión con el front
-        mCircleViewBack = findViewById(R.id.iv_back_APD);
         mSliderView = findViewById(R.id.imageSlider);
         tv_category = findViewById(R.id.tv_category_APD);
         tv_username = findViewById(R.id.tv_username_APD);
@@ -109,20 +113,18 @@ public class PostDetailActivity extends AppCompatActivity {
         btn_irPerfil = findViewById(R.id.btn_ir_perfil_APD);
         mFabComment = findViewById(R.id.fab_comments_APD);
         mRecyclerView = findViewById(R.id.recycleViewComments);
+        mToolbar = findViewById(R.id.toolbar_APD);
 
         //Definir el campo de acción del RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PostDetailActivity.this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        //Listener para ir atrás
-        mCircleViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PostDetailActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        //Instanciación del Toolbar
+        setSupportActionBar(mToolbar);
+        //Le colocamos un texto en vacio para no mostrar nada
+        getSupportActionBar().setTitle("");
+        //Añade el botón que va hacia la actividad padre de donde está el actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Método para que se pueda mover dentro del cuadro de texto cuanto este es muy grande
         tv_description.setMovementMethod(new ScrollingMovementMethod());
@@ -283,10 +285,19 @@ public class PostDetailActivity extends AppCompatActivity {
     //Método que nos lleva al perfil del usuario que creo la publicación
     private void irPerfil() {
         if(idUser!=null){
-            Intent intent = new Intent(PostDetailActivity.this, UserProfileActivity.class);
-            intent.putExtra("idUser", idUser);
-            startActivity(intent);
-            finish();
+            //Validamos que al ir a un perfil si es nuestra publicación se vaya al profile fragment
+            if(idUser == mAuthProvider.getUid()){
+                Intent intent = new Intent(PostDetailActivity.this, ProfileFragment.class);
+                intent.putExtra("idUser", idUser);
+                startActivity(intent);
+                finish();
+            }else{
+                Intent intent = new Intent(PostDetailActivity.this, UserProfileActivity.class);
+                intent.putExtra("idUser", idUser);
+                startActivity(intent);
+                finish();
+            }
+
         }
     }
 
